@@ -1,0 +1,328 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700&family=Inter:wght@400;500;600&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .screen { width: 100%; aspect-ratio: 16/9; border-radius: 12px; display: grid; grid-template-columns: 1.05fr 0.95fr; position: relative; overflow: hidden; font-family: 'Inter', sans-serif; margin-bottom: 16px; }
+  .top-bar { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #4C6EF5; z-index: 10; }
+  .left-white { background: #ffffff; display: flex; flex-direction: column; justify-content: center; padding: 9% 6% 9% 8%; position: relative; z-index: 2; }
+  .left-navy { background: #0D1B3E; display: flex; flex-direction: column; justify-content: center; padding: 9% 6% 9% 8%; position: relative; z-index: 2; }
+  .right-navy { background: #0D1B3E; display: flex; flex-direction: column; justify-content: center; padding: 9% 7% 9% 6%; position: relative; z-index: 2; gap: clamp(8px,1.4vw,16px); }
+  .right-white { background: #ffffff; display: flex; flex-direction: column; justify-content: center; padding: 9% 7% 9% 6%; position: relative; z-index: 2; gap: clamp(8px,1.4vw,16px); }
+  .bg-logo { position: absolute; opacity: 0.18; mix-blend-mode: screen; pointer-events: none; }
+  .bg-logo-light { position: absolute; opacity: 0.06; pointer-events: none; }
+  .cat-label { font-size: clamp(7px,0.8vw,9px); font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #4C6EF5; margin-bottom: clamp(8px,1.5vw,16px); }
+  .title-dark { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(22px,4.4vw,52px); color: #0D1B3E; line-height: 1.0; margin-bottom: clamp(6px,1.2vw,12px); }
+  .title-white { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(22px,4.4vw,52px); color: #ffffff; line-height: 1.0; margin-bottom: clamp(6px,1.2vw,12px); }
+  .title-dark em, .title-white em { color: #4C6EF5; font-style: normal; }
+  .divider { width: clamp(24px,3vw,36px); height: 3px; border-radius: 2px; margin-bottom: clamp(8px,1.4vw,16px); }
+  .div-blue { background: #4C6EF5; }
+  .body-gray { font-size: clamp(8px,1vw,12px); color: #6B7280; line-height: 1.6; max-width: 90%; margin-bottom: clamp(10px,1.6vw,18px); }
+  .body-muted { font-size: clamp(8px,1vw,12px); color: #8BA3D4; line-height: 1.6; max-width: 90%; margin-bottom: clamp(10px,1.6vw,18px); }
+  .hook { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(11px,1.8vw,22px); color: #4C6EF5; margin-bottom: clamp(6px,1vw,12px); line-height: 1.2; }
+  .benefit-list { display: flex; flex-direction: column; gap: clamp(4px,0.7vw,8px); }
+  .benefit-item { display: flex; align-items: flex-start; gap: clamp(6px,0.9vw,10px); }
+  .bdot { width: clamp(4px,0.55vw,6px); height: clamp(4px,0.55vw,6px); border-radius: 50%; background: #4C6EF5; flex-shrink: 0; margin-top: clamp(3px,0.4vw,5px); }
+  .btext-dark { font-size: clamp(7px,0.95vw,12px); color: #374151; line-height: 1.4; }
+  .btext-light { font-size: clamp(7px,0.95vw,12px); color: #C8D8F0; line-height: 1.4; }
+  .right-label { font-size: clamp(7px,0.8vw,9px); font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #4C6EF5; }
+  .treat-list { display: flex; flex-direction: column; gap: clamp(4px,0.7vw,9px); }
+  .treat-item { display: flex; align-items: center; gap: clamp(6px,0.9vw,10px); }
+  .t-num { width: clamp(16px,2vw,22px); height: clamp(16px,2vw,22px); border-radius: 50%; background: #4C6EF5; color: #fff; font-size: clamp(7px,0.9vw,11px); font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .t-num-dark { background: #EEF2FF; color: #3B5BDB; }
+  .t-text-light { font-size: clamp(7px,0.9vw,11px); color: #C8D8F0; line-height: 1.3; }
+  .t-text-dark { font-size: clamp(7px,0.9vw,11px); color: #374151; line-height: 1.3; }
+  .unique-tag { display: inline-block; font-size: clamp(6px,0.7vw,8px); font-weight: 600; padding: 2px 7px; border-radius: 8px; background: #4C6EF5; color: #fff; margin-left: 4px; letter-spacing: 0.04em; }
+  .key-facts { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(5px,0.8vw,9px); }
+  .fact-card-navy { background: #0A1628; border: 1px solid #1A2F6E; border-radius: 8px; padding: clamp(5px,0.9vw,11px); }
+  .fact-card-white { background: #F0F4FF; border: 1px solid #D0D8F0; border-radius: 8px; padding: clamp(5px,0.9vw,11px); }
+  .fact-label { font-size: clamp(6px,0.65vw,8px); color: #4C6EF5; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2px; }
+  .fact-val-white { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(9px,1.4vw,16px); color: #ffffff; line-height: 1.1; }
+  .fact-val-dark { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(9px,1.4vw,16px); color: #0D1B3E; line-height: 1.1; }
+  .cta-strip { display: flex; align-items: center; gap: clamp(8px,1.2vw,14px); }
+  .cta-btn { display: inline-flex; align-items: center; background: #4C6EF5; color: #fff; font-size: clamp(7px,0.85vw,10px); font-weight: 600; padding: clamp(4px,0.7vw,8px) clamp(9px,1.3vw,16px); border-radius: 24px; white-space: nowrap; }
+  .cta-phone-dark { font-size: clamp(7px,0.85vw,10px); color: #6B7280; font-weight: 500; }
+  .cta-phone-light { font-size: clamp(7px,0.85vw,10px); color: #8BA3D4; font-weight: 500; }
+  .logo-dark { position: absolute; top: 6%; left: 7%; z-index: 10; }
+  .logo-text-d { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(10px,1.4vw,16px); color: #0D1B3E; letter-spacing: 0.08em; line-height: 1; }
+  .logo-text-w { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(10px,1.4vw,16px); color: #ffffff; letter-spacing: 0.08em; line-height: 1; }
+  .logo-sub { font-size: clamp(5px,0.6vw,7px); font-weight: 500; color: #4C6EF5; letter-spacing: 0.22em; text-transform: uppercase; margin-top: 2px; }
+  .joint-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: clamp(6px,1vw,12px); }
+  .joint-pill { background: #EEF2FF; border-radius: 8px; padding: clamp(6px,0.9vw,11px); text-align: center; }
+  .jp-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(9px,1.2vw,15px); color: #0D1B3E; }
+  .jp-hook { font-size: clamp(7px,0.8vw,9px); color: #6B7280; margin-top: 2px; line-height: 1.3; }
+</style>
+
+<h2 class="sr-only">LifeGenix joint series intro and all seven joint screens</h2>
+
+<div class="screen">
+  <div class="top-bar"></div>
+  <div class="logo-dark"><div class="logo-text-d">LIFEGENIX</div><div class="logo-sub">Institute</div></div>
+  <div class="left-white">
+    <img class="bg-logo-light" src="/mnt/user-data/uploads/x_lifegenix_logo_bg_4x.png" style="left:-12%;bottom:-16%;width:clamp(160px,36vw,400px);" alt="">
+    <div class="cat-label">Regenerative Medicine</div>
+    <div class="title-dark">Advanced Solutions<br>for <em>Joint Pain</em></div>
+    <div class="divider div-blue"></div>
+    <div class="body-gray">Our biologic treatments target the source of your pain, promoting natural healing across all major joint areas — without surgery, without long recovery.</div>
+    <div class="joint-grid">
+      <div class="joint-pill"><div class="jp-name">Knee</div><div class="jp-hook">Stairs & mobility</div></div>
+      <div class="joint-pill"><div class="jp-name">Ankle</div><div class="jp-hook">Balance & stability</div></div>
+      <div class="joint-pill"><div class="jp-name">Elbow</div><div class="jp-hook">Grip & function</div></div>
+      <div class="joint-pill"><div class="jp-name">Shoulder</div><div class="jp-hook">Reach & strength</div></div>
+      <div class="joint-pill"><div class="jp-name">Hip</div><div class="jp-hook">Movement & gait</div></div>
+      <div class="joint-pill"><div class="jp-name">Wrist</div><div class="jp-hook">Fine motor tasks</div></div>
+    </div>
+  </div>
+  <div class="right-navy">
+    <img class="bg-logo" src="/mnt/user-data/uploads/x_lifegenix_logo_bg_4x.png" style="right:-10%;top:-10%;width:clamp(120px,28vw,300px);" alt="">
+    <div class="right-label">Every Joint. One Solution.</div>
+    <div class="treat-list">
+      <div class="treat-item"><div class="t-num">1</div><span class="t-text-light">Biologic injections for joint regeneration</span></div>
+      <div class="treat-item"><div class="t-num">2</div><span class="t-text-light">Platelet-rich plasma (PRP) therapy</span></div>
+      <div class="treat-item"><div class="t-num">3</div><span class="t-text-light">Anti-inflammatory protocols</span></div>
+      <div class="treat-item"><div class="t-num">4</div><span class="t-text-light">Personalized rehabilitation programs</span></div>
+      <div class="treat-item"><div class="t-num">5</div><span class="t-text-light">Joint-specific precision treatments</span></div>
+    </div>
+    <div class="cta-strip">
+      <div class="cta-btn">Schedule Consultation →</div>
+      <div class="cta-phone-light">(972) 236-3333</div>
+    </div>
+  </div>
+</div>
+
+<div class="screen">
+  <div class="top-bar"></div>
+  <div class="logo-dark"><div class="logo-text-d">LIFEGENIX</div><div class="logo-sub">Institute</div></div>
+  <div class="left-white">
+    <img class="bg-logo-light" src="/mnt/user-data/uploads/x_lifegenix_logo_bg_4x.png" style="left:-12%;bottom:-16%;width:clamp(160px,36vw,400px);" alt="">
+    <div class="cat-label">Joint Pain Relief</div>
+    <div class="hook">"Walking. Climbing stairs.<br>Your independence."</div>
+    <div class="title-dark">Knee Pain<br><em>Relief</em></div>
+    <div class="divider div-blue"></div>
+    <div class="benefit-list">
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Osteoarthritis & degenerative joint disease</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Torn meniscus and ligament injuries</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Tendonitis, bursitis & sports overuse</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Instability and giving-out sensation</span></div>
+    </div>
+  </div>
+  <div class="right-navy">
+    <img class="bg-logo" src="/mnt/user-data/uploads/x_lifegenix_logo_bg_4x.png" style="right:-10%;top:-10%;width:clamp(120px,28vw,300px);" alt="">
+    <div class="right-label">Treatment Approach</div>
+    <div class="treat-list">
+      <div class="treat-item"><div class="t-num">1</div><span class="t-text-light">Biologic injections for cartilage regeneration</span></div>
+      <div class="treat-item"><div class="t-num">2</div><span class="t-text-light">Platelet-rich plasma (PRP) therapy</span></div>
+      <div class="treat-item"><div class="t-num">3</div><span class="t-text-light">Anti-inflammatory treatments</span></div>
+      <div class="treat-item"><div class="t-num">4</div><span class="t-text-light">Personalized rehabilitation protocols</span></div>
+      <div class="treat-item"><div class="t-num">5</div><span class="t-text-light">Joint lubrication therapies <span class="unique-tag">Knee</span></span></div>
+    </div>
+    <div class="key-facts">
+      <div class="fact-card-navy"><div class="fact-label">Approach</div><div class="fact-val-white">Non-Surgical</div></div>
+      <div class="fact-card-navy"><div class="fact-label">Surgery</div><div class="fact-val-white">May Be Avoided</div></div>
+    </div>
+    <div class="cta-strip"><div class="cta-btn">Schedule Consultation →</div><div class="cta-phone-light">(972) 236-3333</div></div>
+  </div>
+</div>
+
+<div class="screen">
+  <div class="top-bar"></div>
+  <div class="logo-dark"><div class="logo-text-d">LIFEGENIX</div><div class="logo-sub">Institute</div></div>
+  <div class="left-white">
+    <img class="bg-logo-light" src="/mnt/user-data/uploads/x_lifegenix_logo_bg_4x.png" style="left:-12%;bottom:-16%;width:clamp(160px,36vw,400px);" alt="">
+    <div class="cat-label">Joint Pain Relief</div>
+    <div class="hook">"Balance. Confidence.<br>Every step."</div>
+    <div class="title-dark">Ankle Pain<br><em>Relief</em></div>
+    <div class="divider div-blue"></div>
+    <div class="benefit-list">
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Ankle sprains & ligament injuries</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Achilles tendon problems</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Chronic instability & frequent rolling</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Difficulty bearing weight on the foot</span></div>
+    </div>
+  </div>
+  <div class="right-navy">
+    <img class="bg-logo" src="/mnt/user-data/uploads/x_lifegenix_logo_bg_4x.png" style="right:-10%;top:-10%;width:clamp(120px,28vw,300px);" alt="">
+    <div class="right-label">Treatment Approach</div>
+    <div class="treat-list">
+      <div class="treat-item"><div class="t-num">1</div><span class="t-text-light">Regenerative biologic injections</span></div>
+      <div class="treat-item"><div class="t-num">2</div><span class="t-text-light">Platelet-rich plasma (PRP) therapy</span></div>
+      <div class="treat-item"><div class="t-num">3</div><span class="t-text-light">Anti-inflammatory protocols</span></div>
+      <div class="treat-item"><div class="t-num">4</div><span class="t-text-light">Customized physical therapy guidance</span></div>
+      <div class="treat-item"><div class="t-num">5</div><span class="t-text-light">Ligament & tendon support <span class="unique-tag">Ankle</span></span></div>
+    </div>
+    <div class="key-facts">
+      <div class="fact-card-navy"><div class="fact-label">Approach</div><div class="fact-val-white">Non-Surgical</div></div>
+      <div class="fact-card-navy"><div class="fact-label">Recovery</div><div class="fact-val-white">Minimal Downtime</div></div>
+    </div>
+    <div class="cta-strip"><div class="cta-btn">Schedule Consultation →</div><div class="cta-phone-light">(972) 236-3333</div></div>
+  </div>
+</div>
+
+<div class="screen">
+  <div class="top-bar"></div>
+  <div class="logo-dark"><div class="logo-text-d">LIFEGENIX</div><div class="logo-sub">Institute</div></div>
+  <div class="left-white">
+    <img class="bg-logo-light" src="/mnt/user-data/uploads/x_lifegenix_logo_bg_4x.png" style="left:-12%;bottom:-16%;width:clamp(160px,36vw,400px);" alt="">
+    <div class="cat-label">Joint Pain Relief</div>
+    <div class="hook">"Lifting a coffee cup.<br>Shaking hands."</div>
+    <div class="title-dark">Elbow Pain<br><em>Relief</em></div>
+    <div class="divider div-blue"></div>
+    <div class="benefit-list">
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Tennis elbow & golfer's elbow</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Weak grip strength & forearm pain</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Osteoarthritis & repetitive strain</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Pain when gripping, lifting or twisting</span></div>
+    </div>
+  </div>
+  <div class="right-navy">
+    <img class="bg-logo" src="/mnt/user-data/uploads/x_lifegenix_logo_bg_4x.png" style="right:-10%;top:-10%;width:clamp(120px,28vw,300px);" alt="">
+    <div class="right-label">Treatment Approach</div>
+    <div class="treat-list">
+      <div class="treat-item"><div class="t-num">1</div><span class="t-text-light">Biologic injections for tendon healing</span></div>
+      <div class="treat-item"><div class="t-num">2</div><span class="t-text-light">Platelet-rich plasma (PRP) therapy</span></div>
+      <div class="treat-item"><div class="t-num">3</div><span class="t-text-light">Anti-inflammatory protocols</span></div>
+      <div class="treat-item"><div class="t-num">4</div><span class="t-text-light">Rehabilitation & strengthening guidance</span></div>
+      <div class="treat-item"><div class="t-num">5</div><span class="t-text-light">Ultrasound-guided precision treatments <span class="unique-tag">Elbow</span></span></div>
+    </div>
+    <div class="key-facts">
+      <div class="fact-card-navy"><div class="fact-label">Approach</div><div class="fact-val-white">Non-Surgical</div></div>
+      <div class="fact-card-navy"><div class="fact-label">Steroids</div><div class="fact-val-white">Not Required</div></div>
+    </div>
+    <div class="cta-strip"><div class="cta-btn">Schedule Consultation →</div><div class="cta-phone-light">(972) 236-3333</div></div>
+  </div>
+</div>
+
+<div class="screen">
+  <div class="top-bar"></div>
+  <div class="logo-dark"><div class="logo-text-d">LIFEGENIX</div><div class="logo-sub">Institute</div></div>
+  <div class="left-white">
+    <img class="bg-logo-light" src="/mnt/user-data/uploads/x_lifegenix_logo_bg_4x.png" style="left:-12%;bottom:-16%;width:clamp(160px,36vw,400px);" alt="">
+    <div class="cat-label">Joint Pain Relief</div>
+    <div class="hook">"Reaching a shelf.<br>Getting dressed."</div>
+    <div class="title-dark">Shoulder Pain<br><em>Relief</em></div>
+    <div class="divider div-blue"></div>
+    <div class="benefit-list">
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Rotator cuff tears & frozen shoulder</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Night pain that disrupts sleep</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Impingement syndrome & osteoarthritis</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Weakness when lifting or carrying</span></div>
+    </div>
+  </div>
+  <div class="right-navy">
+    <img class="bg-logo" src="/mnt/user-data/uploads/x_lifegenix_logo_bg_4x.png" style="right:-10%;top:-10%;width:clamp(120px,28vw,300px);" alt="">
+    <div class="right-label">Treatment Approach</div>
+    <div class="treat-list">
+      <div class="treat-item"><div class="t-num">1</div><span class="t-text-light">Biologic injections for rotator cuff healing</span></div>
+      <div class="treat-item"><div class="t-num">2</div><span class="t-text-light">Platelet-rich plasma (PRP) therapy</span></div>
+      <div class="treat-item"><div class="t-num">3</div><span class="t-text-light">Ultrasound-guided precision treatments</span></div>
+      <div class="treat-item"><div class="t-num">4</div><span class="t-text-light">Anti-inflammatory protocols</span></div>
+      <div class="treat-item"><div class="t-num">5</div><span class="t-text-light">Rehabilitation & mobility exercises</span></div>
+    </div>
+    <div class="key-facts">
+      <div class="fact-card-navy"><div class="fact-label">Approach</div><div class="fact-val-white">Non-Surgical</div></div>
+      <div class="fact-card-navy"><div class="fact-label">Surgery</div><div class="fact-val-white">May Be Avoided</div></div>
+    </div>
+    <div class="cta-strip"><div class="cta-btn">Schedule Consultation →</div><div class="cta-phone-light">(972) 236-3333</div></div>
+  </div>
+</div>
+
+<div class="screen">
+  <div class="top-bar"></div>
+  <div class="logo-dark"><div class="logo-text-d">LIFEGENIX</div><div class="logo-sub">Institute</div></div>
+  <div class="left-white">
+    <img class="bg-logo-light" src="/mnt/user-data/uploads/x_lifegenix_logo_bg_4x.png" style="left:-12%;bottom:-16%;width:clamp(160px,36vw,400px);" alt="">
+    <div class="cat-label">Joint Pain Relief</div>
+    <div class="hook">"Getting in and out<br>of the car."</div>
+    <div class="title-dark">Hip Pain<br><em>Relief</em></div>
+    <div class="divider div-blue"></div>
+    <div class="benefit-list">
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Osteoarthritis & labral tears</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Bursitis & hip impingement (FAI)</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Limp or altered gait</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Groin & thigh pain with activity</span></div>
+    </div>
+  </div>
+  <div class="right-navy">
+    <img class="bg-logo" src="/mnt/user-data/uploads/x_lifegenix_logo_bg_4x.png" style="right:-10%;top:-10%;width:clamp(120px,28vw,300px);" alt="">
+    <div class="right-label">Treatment Approach</div>
+    <div class="treat-list">
+      <div class="treat-item"><div class="t-num">1</div><span class="t-text-light">Biologic injections for hip joint regeneration</span></div>
+      <div class="treat-item"><div class="t-num">2</div><span class="t-text-light">Platelet-rich plasma (PRP) therapy</span></div>
+      <div class="treat-item"><div class="t-num">3</div><span class="t-text-light">Anti-inflammatory & lubrication treatments</span></div>
+      <div class="treat-item"><div class="t-num">4</div><span class="t-text-light">Customized rehabilitation programs</span></div>
+      <div class="treat-item"><div class="t-num">5</div><span class="t-text-light">Fluoroscopy-guided injections <span class="unique-tag">Hip</span></span></div>
+    </div>
+    <div class="key-facts">
+      <div class="fact-card-navy"><div class="fact-label">Approach</div><div class="fact-val-white">Non-Surgical</div></div>
+      <div class="fact-card-navy"><div class="fact-label">Replacement</div><div class="fact-val-white">May Be Avoided</div></div>
+    </div>
+    <div class="cta-strip"><div class="cta-btn">Schedule Consultation →</div><div class="cta-phone-light">(972) 236-3333</div></div>
+  </div>
+</div>
+
+<div class="screen">
+  <div class="top-bar"></div>
+  <div class="logo-dark"><div class="logo-text-d">LIFEGENIX</div><div class="logo-sub">Institute</div></div>
+  <div class="left-white">
+    <img class="bg-logo-light" src="/mnt/user-data/uploads/x_lifegenix_logo_bg_4x.png" style="left:-12%;bottom:-16%;width:clamp(160px,36vw,400px);" alt="">
+    <div class="cat-label">Joint Pain Relief</div>
+    <div class="hook">"Typing. Cooking.<br>Driving."</div>
+    <div class="title-dark">Wrist Pain<br><em>Relief</em></div>
+    <div class="divider div-blue"></div>
+    <div class="benefit-list">
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Carpal tunnel & TFCC injuries</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Numbness or tingling in hand & fingers</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">De Quervain's & tendinitis</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Weakness in grip strength</span></div>
+    </div>
+  </div>
+  <div class="right-navy">
+    <img class="bg-logo" src="/mnt/user-data/uploads/x_lifegenix_logo_bg_4x.png" style="right:-10%;top:-10%;width:clamp(120px,28vw,300px);" alt="">
+    <div class="right-label">Treatment Approach</div>
+    <div class="treat-list">
+      <div class="treat-item"><div class="t-num">1</div><span class="t-text-light">Targeted biologic injections</span></div>
+      <div class="treat-item"><div class="t-num">2</div><span class="t-text-light">Platelet-rich plasma (PRP) therapy</span></div>
+      <div class="treat-item"><div class="t-num">3</div><span class="t-text-light">Ultrasound-guided precision treatments</span></div>
+      <div class="treat-item"><div class="t-num">4</div><span class="t-text-light">Anti-inflammatory protocols</span></div>
+      <div class="treat-item"><div class="t-num">5</div><span class="t-text-light">Hand therapy & rehabilitation <span class="unique-tag">Wrist</span></span></div>
+    </div>
+    <div class="key-facts">
+      <div class="fact-card-navy"><div class="fact-label">Approach</div><div class="fact-val-white">Non-Surgical</div></div>
+      <div class="fact-card-navy"><div class="fact-label">Nerve symptoms</div><div class="fact-val-white">Addressed</div></div>
+    </div>
+    <div class="cta-strip"><div class="cta-btn">Schedule Consultation →</div><div class="cta-phone-light">(972) 236-3333</div></div>
+  </div>
+</div>
+
+<div class="screen">
+  <div class="top-bar"></div>
+  <div class="logo-dark"><div class="logo-text-d">LIFEGENIX</div><div class="logo-sub">Institute</div></div>
+  <div class="left-white">
+    <img class="bg-logo-light" src="/mnt/user-data/uploads/x_lifegenix_logo_bg_4x.png" style="left:-12%;bottom:-16%;width:clamp(160px,36vw,400px);" alt="">
+    <div class="cat-label">Joint Pain Relief</div>
+    <div class="hook">"Buttoning a shirt.<br>Walking comfortably."</div>
+    <div class="title-dark">Finger & Toe<br><em>Joint Relief</em></div>
+    <div class="divider div-blue"></div>
+    <div class="benefit-list">
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Rheumatoid arthritis & gout</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Trigger finger & joint stiffness</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Pain that worsens in cold weather</span></div>
+      <div class="benefit-item"><div class="bdot"></div><span class="btext-dark">Difficulty with fine motor tasks</span></div>
+    </div>
+  </div>
+  <div class="right-navy">
+    <img class="bg-logo" src="/mnt/user-data/uploads/x_lifegenix_logo_bg_4x.png" style="right:-10%;top:-10%;width:clamp(120px,28vw,300px);" alt="">
+    <div class="right-label">Treatment Approach</div>
+    <div class="treat-list">
+      <div class="treat-item"><div class="t-num">1</div><span class="t-text-light">Precision biologic injections for small joints</span></div>
+      <div class="treat-item"><div class="t-num">2</div><span class="t-text-light">Platelet-rich plasma (PRP) therapy</span></div>
+      <div class="treat-item"><div class="t-num">3</div><span class="t-text-light">Anti-inflammatory treatments</span></div>
+      <div class="treat-item"><div class="t-num">4</div><span class="t-text-light">Joint mobilization techniques</span></div>
+      <div class="treat-item"><div class="t-num">5</div><span class="t-text-light">Customized hand or foot therapy <span class="unique-tag">Small Joints</span></span></div>
+    </div>
+    <div class="key-facts">
+      <div class="fact-card-navy"><div class="fact-label">Approach</div><div class="fact-val-white">Non-Surgical</div></div>
+      <div class="fact-card-navy"><div class="fact-label">Fine motor</div><div class="fact-val-white">Restored</div></div>
+    </div>
+    <div class="cta-strip"><div class="cta-btn">Schedule Consultation →</div><div class="cta-phone-light">(972) 236-3333</div></div>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700&family=Inter:wght@400;500;600&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .screen {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+  }
+  .top-bar { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #4C6EF5; z-index: 10; }
+  .left-panel {
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 9% 6% 9% 8%;
+    position: relative;
+    z-index: 2;
+  }
+  .bg-logo-left { position: absolute; left: -12%; bottom: -16%; width: clamp(160px,36vw,400px); height: auto; opacity: 0.06; pointer-events: none; }
+  .category-label { font-size: clamp(7px, 0.8vw, 9px); font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #4C6EF5; margin-bottom: clamp(8px,1.5vw,16px); }
+  .service-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(24px,4.8vw,58px); color: #0D1B3E; line-height: 1.0; margin-bottom: clamp(6px,1.2vw,14px); }
+  .service-title em { color: #4C6EF5; font-style: normal; }
+  .divider { width: clamp(28px,3.5vw,44px); height: 3px; background: #4C6EF5; border-radius: 2px; margin-bottom: clamp(10px,1.8vw,18px); }
+  .description { font-size: clamp(9px,1.1vw,13px); color: #6B7280; line-height: 1.65; max-width: 90%; margin-bottom: clamp(12px,2vw,20px); }
+  .type-row { display: flex; flex-wrap: wrap; gap: clamp(4px,0.6vw,7px); margin-bottom: clamp(12px,2vw,20px); }
+  .type-pill { font-size: clamp(7px,0.8vw,10px); font-weight: 500; padding: clamp(3px,0.4vw,5px) clamp(8px,1vw,12px); border-radius: 20px; background: #EEF2FF; color: #3B5BDB; letter-spacing: 0.04em; }
+  .benefit-list { display: flex; flex-direction: column; gap: clamp(5px,0.8vw,9px); }
+  .benefit-item { display: flex; align-items: flex-start; gap: clamp(7px,1vw,10px); }
+  .benefit-dot { width: clamp(5px,0.6vw,7px); height: clamp(5px,0.6vw,7px); border-radius: 50%; background: #4C6EF5; flex-shrink: 0; margin-top: clamp(3px,0.45vw,5px); }
+  .benefit-text { font-size: clamp(8px,1vw,12px); color: #374151; line-height: 1.4; }
+  .right-panel {
+    background: #0D1B3E;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 9% 7% 9% 6%;
+    position: relative;
+    z-index: 2;
+    gap: clamp(10px,1.6vw,18px);
+  }
+  .bg-logo-right { position: absolute; right: -10%; top: -10%; width: clamp(140px,32vw,340px); height: auto; opacity: 0.18; mix-blend-mode: screen; pointer-events: none; }
+  .right-label { font-size: clamp(7px,0.8vw,9px); font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #4C6EF5; }
+  .big-claim { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(14px,2.6vw,30px); color: #ffffff; line-height: 1.2; }
+  .big-claim em { color: #4C6EF5; font-style: normal; }
+  .right-divider { width: clamp(24px,3vw,36px); height: 3px; background: #4C6EF5; border-radius: 2px; }
+  .treatment-list { display: flex; flex-direction: column; gap: clamp(5px,0.9vw,10px); }
+  .treatment-item { display: flex; align-items: center; gap: clamp(7px,1vw,12px); }
+  .t-num { width: clamp(18px,2.2vw,26px); height: clamp(18px,2.2vw,26px); border-radius: 50%; background: #4C6EF5; color: #fff; font-size: clamp(8px,1vw,12px); font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .t-text { font-size: clamp(8px,1vw,12px); color: #C8D8F0; line-height: 1.3; }
+  .logo-area { position: absolute; top: 6%; left: 7%; z-index: 10; }
+  .logo-text { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(11px,1.6vw,18px); color: #0D1B3E; letter-spacing: 0.08em; line-height: 1; }
+  .logo-sub { font-size: clamp(5px,0.65vw,8px); font-weight: 500; color: #4C6EF5; letter-spacing: 0.22em; text-transform: uppercase; margin-top: 2px; }
+</style>
+
+<h2 class="sr-only">LifeGenix arthritis condition screen for regenerative series</h2>
+
+<div class="screen">
+  <div class="top-bar"></div>
+  <div class="logo-area"><div class="logo-text">LIFEGENIX</div><div class="logo-sub">Institute</div></div>
+
+  <div class="left-panel">
+    <img class="bg-logo-left" src="/mnt/user-data/uploads/x_lifegenix_logo_bg_4x.png" alt="">
+    <div class="category-label">Regenerative Medicine</div>
+    <div class="service-title">Arthritis<br><em>Pain Relief</em></div>
+    <div class="divider"></div>
+    <div class="description">A comprehensive approach to arthritis management — reducing inflammation, supporting joint tissue, and potentially slowing disease progression across all joint types.</div>
+    <div class="type-row">
+      <span class="type-pill">Osteoarthritis</span>
+      <span class="type-pill">Rheumatoid</span>
+      <span class="type-pill">Psoriatic</span>
+      <span class="type-pill">Post-traumatic</span>
+      <span class="type-pill">Gout</span>
+    </div>
+    <div class="benefit-list">
+      <div class="benefit-item"><div class="benefit-dot"></div><span class="benefit-text">Reduces chronic inflammation at the source</span></div>
+      <div class="benefit-item"><div class="benefit-dot"></div><span class="benefit-text">Supports remaining joint tissue</span></div>
+      <div class="benefit-item"><div class="benefit-dot"></div><span class="benefit-text">May slow disease progression</span></div>
+      <div class="benefit-item"><div class="benefit-dot"></div><span class="benefit-text">Non-surgical pain management</span></div>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <img class="bg-logo-right" src="/mnt/user-data/uploads/x_lifegenix_logo_bg_4x.png" alt="">
+    <div class="right-label">The LifeGenix Difference</div>
+    <div class="big-claim">Not just managing pain.<br><em>Changing the outcome.</em></div>
+    <div class="right-divider"></div>
+    <div class="treatment-list">
+      <div class="treatment-item"><div class="t-num">1</div><span class="t-text">Biologic injections for joint regeneration</span></div>
+      <div class="treatment-item"><div class="t-num">2</div><span class="t-text">Platelet-rich plasma (PRP) therapy</span></div>
+      <div class="treatment-item"><div class="t-num">3</div><span class="t-text">Hyaluronic acid supplementation</span></div>
+      <div class="treatment-item"><div class="t-num">4</div><span class="t-text">Anti-inflammatory protocols</span></div>
+      <div class="treatment-item"><div class="t-num">5</div><span class="t-text">Lifestyle and nutrition guidance</span></div>
+      <div class="treatment-item"><div class="t-num">6</div><span class="t-text">Comprehensive arthritis management plans</span></div>
+    </div>
+  </div>
+</div>
