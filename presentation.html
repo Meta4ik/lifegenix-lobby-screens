@@ -268,13 +268,9 @@
         let s28Fix = '';
         if (index === 27) {
           s28Fix = `
-            .sp-right-navy .sp-cat, .sp-right-navy .sp-headline, .sp-right-navy .sp-body, 
-            .sp-right-navy .sp-ftag-title, .sp-right-navy .sp-ftag-desc {
-              color: rgba(255,255,255,0.9) !important;
-            }
-            .sp-right-navy .sp-headline { color: #ffffff !important; }
-            .sp-right-navy .sp-ftag-title { color: #4dabf7 !important; }
-            .sp-right-navy .logo-img { content: url('white logo@4x.png') !important; }
+            .sp-right-navy .sp-cat { color: var(--brand-color) !important; }
+            .sp-right-navy .sp-ftag-title { color: var(--brand-color) !important; }
+            .sp-right-navy .sp-ftag-desc { color: var(--body-color) !important; }
           `;
         }
 
