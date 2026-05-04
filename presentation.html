@@ -252,9 +252,30 @@
         if (index >= 12 && index <= 14) {
           contrastFix = `
             .left-panel { background: #ffffff !important; }
+            .left-panel .challenge-label { 
+              background: #0A1628 !important; 
+              color: #ffffff !important; 
+              display: inline-block !important;
+              padding: 8px 24px !important;
+              border-radius: 50px !important;
+              font-size: 15px !important;
+              font-weight: 800 !important;
+              letter-spacing: 0.25em !important;
+              margin-bottom: 30px !important;
+            }
             .right-panel { background: #0A1628 !important; }
             .right-panel * { color: #ffffff !important; }
-            .right-panel .solution-label { color: #4C6EF5 !important; }
+            .right-panel .solution-label { 
+              background: var(--brand-color) !important;
+              color: #ffffff !important; 
+              display: inline-block !important;
+              padding: 8px 24px !important;
+              border-radius: 50px !important;
+              font-size: 15px !important;
+              font-weight: 800 !important;
+              letter-spacing: 0.25em !important;
+              margin-bottom: 30px !important;
+            }
             .right-panel .em { color: #4C6EF5 !important; }
             .right-panel .cue-text { color: #4C6EF5 !important; }
             .right-panel .cue-dot { background: #4C6EF5 !important; }
@@ -321,7 +342,26 @@
           }
           
           .challenge-label, .solution-label {
-            color: var(--brand-color) !important;
+            display: inline-block !important;
+            font-size: 15px !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.25em !important;
+            text-transform: uppercase !important;
+            padding: 8px 24px !important;
+            border-radius: 50px !important;
+            margin-bottom: 30px !important;
+          }
+          
+          /* Challenge Label: Dark Background (Navy) for contrast on white left panel */
+          .challenge-label {
+            background: #0A1628 !important;
+            color: #ffffff !important;
+          }
+          
+          /* Solution Label: Brand Blue Background for contrast on dark right panel or light panel */
+          .solution-label {
+            background: var(--brand-color) !important;
+            color: #ffffff !important;
           }
           
           /* Card-like elements (Pillars, Stat Boxes, Fact Cards, Photo Boxes) */
