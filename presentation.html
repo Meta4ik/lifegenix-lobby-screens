@@ -522,6 +522,38 @@
       }
     }
 
+    async function downloadSlidePNG(index, btnElement) {
+      const originalText = btnElement.innerHTML;
+      btnElement.innerHTML = 'Generating...';
+      btnElement.disabled = true;
+      
+      try {
+        const iframe = document.querySelector(`iframe[data-index="${index}"]`);
+        if (!iframe || !iframe.contentDocument) throw new Error("Iframe not accessible");
+        
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        const canvas = await html2canvas(iframe.contentDocument.body, {
+          width: 1920,
+          height: 1080,
+          scale: 2, // 2x scale for high resolution (3840x2160)
+          useCORS: true,
+          logging: false
+        });
+        
+        const link = document.createElement('a');
+        link.download = `LifeGenix_Slide_${String(index + 1).padStart(2, '0')}_HiRes.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      } catch (err) {
+        console.error(err);
+        alert('Failed to generate PNG. Make sure you are running a local server to avoid CORS issues with images.');
+      } finally {
+        btnElement.innerHTML = originalText;
+        btnElement.disabled = false;
+      }
+    }
+
     async function downloadSlidePDF(index, btnElement) {
       const originalText = btnElement.innerHTML;
       btnElement.innerHTML = 'Generating...';
@@ -590,8 +622,29 @@
           downloadSlidePDF(i, dlBtn);
         };
         
+        const pngBtn = document.createElement('button');
+        pngBtn.className = 'download-btn';
+        pngBtn.innerHTML = `
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <polyline points="21 15 16 10 5 21"></polyline>
+          </svg>
+          PNG
+        `;
+        pngBtn.onclick = (e) => {
+          e.stopPropagation();
+          downloadSlidePNG(i, pngBtn);
+        };
+
+        const btnContainer = document.createElement('div');
+        btnContainer.style.display = 'flex';
+        btnContainer.style.gap = '8px';
+        btnContainer.appendChild(pngBtn);
+        btnContainer.appendChild(dlBtn);
+        
         label.appendChild(titleSpan);
-        label.appendChild(dlBtn);
+        label.appendChild(btnContainer);
         
         const wrap = document.createElement('div');
         wrap.className = 'iframe-container';
