@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LifeGenix — Slide Overview</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     :root {
       --bg-light: 97%;
@@ -46,6 +48,35 @@
       letter-spacing: 0.15em;
       opacity: 0.9;
       transition: color 0.4s ease;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .download-btn {
+      background: var(--text-color);
+      color: white;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 11px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .download-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+    .download-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
     }
     .iframe-container {
       width: 1920px;
@@ -491,6 +522,45 @@
       }
     }
 
+    async function downloadSlidePDF(index, btnElement) {
+      const originalText = btnElement.innerHTML;
+      btnElement.innerHTML = 'Generating...';
+      btnElement.disabled = true;
+      
+      try {
+        const iframe = document.querySelector(`iframe[data-index="${index}"]`);
+        if (!iframe || !iframe.contentDocument) throw new Error("Iframe not accessible");
+        
+        // Wait briefly to ensure rendering logic has completed if scrolling
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        const canvas = await html2canvas(iframe.contentDocument.body, {
+          width: 1920,
+          height: 1080,
+          scale: 1,
+          useCORS: true,
+          logging: false
+        });
+        
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({
+          orientation: 'landscape',
+          unit: 'px',
+          format: [1920, 1080]
+        });
+        
+        pdf.addImage(imgData, 'JPEG', 0, 0, 1920, 1080);
+        pdf.save(`LifeGenix_Slide_${String(index + 1).padStart(2, '0')}.pdf`);
+      } catch (err) {
+        console.error(err);
+        alert('Failed to generate PDF. Make sure you are running a local server to avoid CORS issues with images.');
+      } finally {
+        btnElement.innerHTML = originalText;
+        btnElement.disabled = false;
+      }
+    }
+
     function render() {
       const container = document.getElementById('container');
       container.innerHTML = ''; 
@@ -501,7 +571,27 @@
         
         const label = document.createElement('div');
         label.className = 'slide-label';
-        label.textContent = `Slide ${String(i + 1).padStart(2, '0')} — ${s.title}`;
+        
+        const titleSpan = document.createElement('span');
+        titleSpan.textContent = `Slide ${String(i + 1).padStart(2, '0')} — ${s.title}`;
+        
+        const dlBtn = document.createElement('button');
+        dlBtn.className = 'download-btn';
+        dlBtn.innerHTML = `
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          PDF
+        `;
+        dlBtn.onclick = (e) => {
+          e.stopPropagation();
+          downloadSlidePDF(i, dlBtn);
+        };
+        
+        label.appendChild(titleSpan);
+        label.appendChild(dlBtn);
         
         const wrap = document.createElement('div');
         wrap.className = 'iframe-container';
